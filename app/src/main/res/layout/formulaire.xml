@@ -19,6 +19,35 @@
             android:layout_height="match_parent">
 
 
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Qui êtes-vous ? "
+                    android:textSize="20dp"
+                    android:layout_margin="10dp"/>
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                    <RadioButton
+                        android:id="@+id/Eleve"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Élève"
+                        android:textSize="16dp" />
+                    <RadioButton
+                        android:id="@+id/Parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Parent"
+                        android:textSize="16dp" />
+                </RadioGroup>
+            </LinearLayout>
+
                 <LinearLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:orientation="horizontal"
@@ -59,7 +88,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Quand allez-vous venir ? "
+                        android:text="Quand comptez-vous venir ? "
                         android:textSize="20dp"
                         android:layout_margin="10dp"/>
                     <RadioGroup
@@ -86,187 +115,29 @@
                             android:text="Tous les jours"
                             android:textSize="16dp" />
                     </RadioGroup>
-                </LinearLayout>
 
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Qu'attendez-vous de la JPO MMI ? "
+                            android:textSize="20dp"
+                            android:layout_margin="10dp"/>
+                        <EditText
+                            android:id="@+id/attentes"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
 
-
-                <!-- a supprimer -->
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Prénom : "
-                        android:textSize="20dp"
-                        android:layout_margin="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                    <Button
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:text="Valider"/>
                 </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Prénom : "
-                        android:textSize="20dp"
-                        android:layout_margin="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Prénom : "
-                        android:textSize="20dp"
-                        android:layout_margin="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Prénom : "
-                        android:textSize="20dp"
-                        android:layout_margin="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Prénom : "
-                        android:textSize="20dp"
-                        android:layout_margin="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Prénom : "
-                        android:textSize="20dp"
-                        android:layout_margin="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Prénom : "
-                        android:textSize="20dp"
-                        android:layout_margin="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Prénom : "
-                    android:textSize="20dp"
-                    android:layout_margin="10dp"/>
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Prénom : "
-                        android:textSize="20dp"
-                        android:layout_margin="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Prénom : "
-                        android:textSize="20dp"
-                        android:layout_margin="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Prénom : "
-                        android:textSize="20dp"
-                        android:layout_margin="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Prénom : "
-                        android:textSize="20dp"
-                        android:layout_margin="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-                <!-- a supprimer -->
-
-
-
-
-
-
-
-                </LinearLayout>
+        </LinearLayout>
     </ScrollView>
     </LinearLayout>
     <include layout="@layout/menu"/>
