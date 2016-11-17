@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layoutPresentationMMI"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textSize="30dp"
+                    android:text="I.Partie 1" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam, atque commodi consequuntur debitis dicta eaque eius eligendi enim eum eveniet inventore, laudantium minus mollitia officia quidem sapiente suscipit voluptatum."/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textSize="30dp"
+                    android:text="II.Partie 2" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam, atque commodi consequuntur debitis dicta eaque eius eligendi enim eum eveniet inventore, laudantium minus mollitia officia quidem sapiente suscipit voluptatum."/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textSize="30dp"
+                    android:text="III.Partie 3" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam, atque commodi consequuntur debitis dicta eaque eius eligendi enim eum eveniet inventore, laudantium minus mollitia officia quidem sapiente suscipit voluptatum."/>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+    <include layout="@layout/menu"/>
+</RelativeLayout>

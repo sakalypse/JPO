@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layoutMenu"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/presentationmmi"
+            android:layout_width="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_height="match_parent"
+            android:text="Présentation MMI"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:padding="2dp"
+            android:textSize="10dp"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black" />
+
+        <Button
+            android:id="@+id/profsalle"
+            android:layout_width="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_height="match_parent"
+            android:text="Profs et salles"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:padding="2dp"
+            android:textSize="10dp"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black" />
+
+
+        <Button
+            android:id="@+id/formulaire"
+            android:layout_width="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_height="match_parent"
+            android:text="Formulaire"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:padding="2dp"
+            android:textSize="10dp"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black" />
+
+        <Button
+            android:id="@+id/videos"
+            android:layout_width="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_height="wrap_content"
+            android:text="Vidéos"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:padding="2dp"
+            android:textSize="10dp"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black" />
+
+        <Button
+            android:id="@+id/localisation"
+            android:layout_width="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_height="match_parent"
+            android:text="Géolocalisation"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:padding="2dp"
+            android:textSize="10dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
