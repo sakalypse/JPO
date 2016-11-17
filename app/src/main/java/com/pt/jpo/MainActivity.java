@@ -19,6 +19,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+/*
+        if (getIntent() != null) {
+            if (getIntent().getExtras().getString(MapActivity.LAYOUT_MESSAGE) != null) {
+                switch (getIntent().getExtras().getString(MapActivity.LAYOUT_MESSAGE)) {
+                    case "layoutFormulaire":
+                        setContentView(R.layout.formulaire);
+                        break;
+                    case "layoutPresentationMMI":
+                        setContentView(R.layout.presentation_mmi);
+                        break;
+                    case "layoutProfSalle":
+                        setContentView(R.layout.profsalle);
+                        initMarginAllLayout(findViewById(R.id.profsalle));
+
+                        break;
+                    case "layoutVideos":
+                        setContentView(R.layout.videos);
+                        break;
+                    default:
+                        setContentView(R.layout.presentation_mmi);
+                        initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
+
+                        break;
+
+                }
+            }
+        }
+        */
 
         setContentView(R.layout.presentation_mmi);
         initButton();
@@ -81,12 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case  R.id.localisation: {
-                Intent myIntent = new Intent(MainActivity.this, MapActivity.class);
-                MainActivity.this.startActivity(myIntent);
-
-                setContentView(R.layout.localisation);
-                initButton();
-                initMarginAllLayout(findViewById(R.id.layoutLocalisation));
+                Intent intent = new Intent(this, MapActivity.class);
+                startActivity(intent);
                 break;
             }
         }
