@@ -135,7 +135,7 @@
                     <Button
                         android:layout_width="100dp"
                         android:layout_height="50dp"
-                        android:text="Valider mdr"/>
+                        android:text="Valider"/>
                 </LinearLayout>
         </LinearLayout>
     </ScrollView>
