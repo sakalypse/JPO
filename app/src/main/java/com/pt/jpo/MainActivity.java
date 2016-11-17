@@ -1,5 +1,6 @@
 package com.pt.jpo;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -80,6 +81,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case  R.id.localisation: {
+                Intent myIntent = new Intent(MainActivity.this, MapActivity.class);
+                MainActivity.this.startActivity(myIntent);
+
                 setContentView(R.layout.localisation);
                 initButton();
                 initMarginAllLayout(findViewById(R.id.layoutLocalisation));
