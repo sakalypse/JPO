@@ -19,38 +19,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-/*
-        if (getIntent() != null) {
-            if (getIntent().getExtras().getString(MapActivity.LAYOUT_MESSAGE) != null) {
-                switch (getIntent().getExtras().getString(MapActivity.LAYOUT_MESSAGE)) {
-                    case "layoutFormulaire":
-                        setContentView(R.layout.formulaire);
-                        break;
-                    case "layoutPresentationMMI":
-                        setContentView(R.layout.presentation_mmi);
-                        break;
-                    case "layoutProfSalle":
-                        setContentView(R.layout.profsalle);
-                        initMarginAllLayout(findViewById(R.id.profsalle));
 
-                        break;
-                    case "layoutVideos":
-                        setContentView(R.layout.videos);
-                        break;
-                    default:
-                        setContentView(R.layout.presentation_mmi);
-                        initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
-
-                        break;
-
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String extraValue = extras.getString(MapActivity.LAYOUT_MESSAGE);
+            switch (extraValue) {
+                case "layoutFormulaire":
+                    setContentView(R.layout.formulaire);
+                    break;
+                case "layoutPresentationMMI":
+                    setContentView(R.layout.presentation_mmi);
+                    break;
+                case "layoutProfSalle":
+                    setContentView(R.layout.profsalle);
+                    initMarginAllLayout(findViewById(R.id.profsalle));
+                    break;
+                case "layoutVideos":
+                    setContentView(R.layout.videos);
+                    break;
+                default:
+                    setContentView(R.layout.presentation_mmi);
+                    initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
+                    break;
                 }
-            }
         }
-        */
+        else{
+            setContentView(R.layout.presentation_mmi);
+            initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
+        }
 
-        setContentView(R.layout.presentation_mmi);
         initButton();
-        initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
     }
 
     public void initButton() {
