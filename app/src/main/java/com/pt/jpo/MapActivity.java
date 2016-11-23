@@ -15,13 +15,13 @@ import android.widget.LinearLayout;
 
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.maps.MapView;
+//import com.google.android.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MyLocationOverlay;
+//import com.google.android.maps.MapController;
+//import com.google.android.maps.MyLocationOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +34,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public final static String LAYOUT_MESSAGE = "com.pt.JPO.MESSAGE";
     private LocationManager locationManager;
-    private MapController mapController;
+    //private MapController mapController;
     private GoogleMap map;
-    private MapView mapView;
-    private MyLocationOverlay myLocation;
+    //private MapView mapView;
+    //private MyLocationOverlay myLocation;
     private double latitude;
     private double longitude;
     private double altitude;
@@ -55,10 +55,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mapView = (MapView) this.findViewById(R.id.map);
+        //mapView = (MapView) this.findViewById(R.id.map);
 
 
-        mapController = mapView.getController();
+        //mapController = mapView.getController();
 
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         ArrayList<LocationProvider> providers = new ArrayList<LocationProvider>();
@@ -67,12 +67,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         for(String name : names)
             providers.add(locationManager.getProvider(name));
 
-
-        map.setMyLocationEnabled(true);
-
-        myLocation = new MyLocationOverlay(getApplicationContext(), mapView);
-        mapView.getOverlays().add(myLocation);
-        myLocation.enableMyLocation();
+        //myLocation = new MyLocationOverlay(getApplicationContext(), mapView);
+        //mapView.getOverlays().add(myLocation);
+        //myLocation.enableMyLocation();
     }
 
     @Override
