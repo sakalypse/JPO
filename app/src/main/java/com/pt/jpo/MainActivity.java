@@ -26,16 +26,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (extraValue) {
                 case "layoutFormulaire":
                     setContentView(R.layout.formulaire);
+                    initMarginAllLayout(findViewById(R.id.layoutFormulaire));
                     break;
                 case "layoutPresentationMMI":
                     setContentView(R.layout.presentation_mmi);
+                    initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
                     break;
                 case "layoutProfSalle":
                     setContentView(R.layout.profsalle);
-                    initMarginAllLayout(findViewById(R.id.profsalle));
+                    initMarginAllLayout(findViewById(R.id.layoutProfSalle));
                     break;
                 case "layoutVideos":
                     setContentView(R.layout.videos);
+                    initMarginAllLayout(findViewById(R.id.layoutVideos));
                     break;
                 default:
                     setContentView(R.layout.presentation_mmi);

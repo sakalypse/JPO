@@ -1,6 +1,10 @@
 package com.pt.jpo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
@@ -9,19 +13,36 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MyLocationOverlay;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sakalypse on 16/11/16.
  */
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener  {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, LocationListener  {
 
     public final static String LAYOUT_MESSAGE = "com.pt.JPO.MESSAGE";
+    private LocationManager locationManager;
+    private MapController mapController;
+    private GoogleMap map;
+    private MapView mapView;
+    private MyLocationOverlay myLocation;
+    private double latitude;
+    private double longitude;
+    private double altitude;
+    private double accuracy;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +54,36 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        map = mapFragment.getMap();
+
+        mapView = (MapView) this.findViewById(R.id.map);
+
+
+        mapController = mapView.getController();
+
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        ArrayList<LocationProvider> providers = new ArrayList<LocationProvider>();
+        List<String> names = locationManager.getProviders(true);
+
+        for(String name : names)
+            providers.add(locationManager.getProvider(name));
+
+
+        map.setMyLocationEnabled(true);
+
+        myLocation = new MyLocationOverlay(getApplicationContext(), mapView);
+        mapView.getOverlays().add(myLocation);
+        myLocation.enableMyLocation();
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we
-     * just add a marker near Africa.
-     */
     @Override
     public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        //locationManager.removeUpdates(this);
     }
 
 
@@ -92,7 +133,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             case  R.id.profsalle: {
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra(LAYOUT_MESSAGE, "layoutProfSalle");
-
                 startActivity(intent);
                 break;
             }
@@ -105,4 +145,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+
+
+    }
 }
