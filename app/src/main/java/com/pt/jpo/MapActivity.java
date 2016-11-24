@@ -120,7 +120,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
             currLocationMarker = mGoogleMap.addMarker(markerOptions);
         }
         else{
-            Toast.makeText(this,"getLastLocation est Null",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"getLastLocation est Null !",Toast.LENGTH_SHORT).show();
         }
 
         mLocationRequest = new LocationRequest();
