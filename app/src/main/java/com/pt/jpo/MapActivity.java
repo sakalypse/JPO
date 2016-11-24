@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -14,17 +15,25 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 
+
+
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import android.location.LocationListener;
 import android.widget.Toast;
 
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 //import com.google.android.maps.MapView;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
@@ -38,17 +47,20 @@ import java.util.List;
  * Created by sakalypse on 16/11/16.
  */
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
+public class MapActivity extends AppCompatActivity implements  View.OnClickListener,
+        OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+
 
     public final static String LAYOUT_MESSAGE = "com.pt.JPO.MESSAGE";
-    private LocationManager locationManager;
-    private double latitude;
-    private double longitude;
-    private SupportMapFragment mapFragment;
-    protected GoogleApiClient mGoogleApiClient;
-    private Location lastLocation;
-    private GoogleMap googleMap;
 
+    LocationRequest mLocationRequest;
+    GoogleApiClient mGoogleApiClient;
+
+    LatLng latLng;
+    GoogleMap mGoogleMap;
+    SupportMapFragment mFragment;
+    Marker currLocationMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,126 +69,109 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         initButton();
         initMarginAllLayout(findViewById(R.id.layoutLocalisation));
 
-        mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mFragment.getMapAsync(this);
+    }
 
-        //locationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+    @Override
+    public void onMapReady(GoogleMap gMap) {
+        mGoogleMap = gMap;
+        try {
+            mGoogleMap.setMyLocationEnabled(true);
+        }catch(SecurityException s){
 
-        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-        lastLocation = this.getLastKnownLocation();
+        }
+
+        buildGoogleApiClient();
+
+        mGoogleApiClient.connect();
+
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        Toast.makeText(this,"buildGoogleApiClient",Toast.LENGTH_SHORT).show();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        Toast.makeText(this,"apres le build",Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onConnected(Bundle bundle) {
+        Toast.makeText(this,"onConnected",Toast.LENGTH_SHORT).show();
+        Location mLastLocation = null;
         try {
-            googleMap = map;
-            googleMap.setMyLocationEnabled(true);
-            lastLocation = this.getLastKnownLocation();
-
-
-
-        }catch (SecurityException se){
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+        }catch(SecurityException s){
 
         }
+        if (mLastLocation != null) {
+            //place marker at current position
+            //mGoogleMap.clear();
+            latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            markerOptions.title("Current Position");
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+            currLocationMarker = mGoogleMap.addMarker(markerOptions);
+        }
+        else{
+            Toast.makeText(this,"getLastLocation est Null",Toast.LENGTH_SHORT).show();
+        }
+
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(5000); //5 seconds
+        mLocationRequest.setFastestInterval(3000); //3 seconds
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        try {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                    mLocationRequest, locationListener);
+        }catch(SecurityException s){
+
+        }
+
     }
 
-    private Location getLastKnownLocation() {
-        List<String> providers = locationManager.getProviders(true);
-        Location bestLocation = null;
-        for (String provider : providers) {
-            Location l = null;
-            try {
-                locationManager.requestLocationUpdates(provider, 1000, 10, mLocationListener);
-                l = locationManager.getLastKnownLocation(provider);
-            }catch(SecurityException s){
-                Toast toast = Toast.makeText(getApplicationContext(), "probleme getLastLocation", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-            if (l == null) {
-                continue;
-            }
-            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                bestLocation = l;
-            }
-        }
-        return bestLocation;
+    @Override
+    public void onConnectionSuspended(int i) {
+        Toast.makeText(this,"onConnectionSuspended",Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Toast.makeText(this,"onConnectionFailed",Toast.LENGTH_SHORT).show();
+    }
 
+    com.google.android.gms.location.LocationListener locationListener = new com.google.android.gms.location.LocationListener() {
+        public void onLocationChanged(Location location) {
+            //place marker at current position
+            //mGoogleMap.clear();
+            if (currLocationMarker != null) {
+                currLocationMarker.remove();
+            }
+            latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            markerOptions.title("Current Position");
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+            currLocationMarker = mGoogleMap.addMarker(markerOptions);
 
-    private final LocationListener mLocationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(final Location location) {
-                try {
+            //zoom to current position:
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLng).zoom(14).build();
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "marche", Toast.LENGTH_SHORT);
-                    toast.show();
+            mGoogleMap.animateCamera(CameraUpdateFactory
+                    .newCameraPosition(cameraPosition));
 
-                    latitude = location.getLatitude();
-                    longitude = location.getLongitude();
-                    LatLng loc = new LatLng(latitude, longitude);
-                    googleMap.addMarker(new MarkerOptions().position(loc).title("New Marker"));
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
-                } catch (SecurityException se) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "marche pas", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-
-/*
-        GeoPoint p = new GeoPoint((int) (latitude * 1E6), (int) (longitude * 1E6));
-        mapController.animateTo(p);
-        mapController.setCenter(p);*/
-        }
-
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
+            //If you only need one location, unregister the listener
+            //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
 
         }
     };
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        try {
-            locationManager.removeUpdates(mLocationListener);
-        }catch(SecurityException s){
-
-        }
-
-    }
-    @Override
-    public void onResume(){
-        super.onResume();
-        try {
-            Toast toast = Toast.makeText(getApplicationContext(), "onResume marche ", Toast.LENGTH_SHORT);
-            toast.show();
-
-            lastLocation = this.getLastKnownLocation();
-
-            if (lastLocation!=null) {
-                LatLng loc = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-                googleMap.addMarker(new MarkerOptions().position(loc).title("New Marker"));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
-            }
-
-        }catch(SecurityException s){
-            Toast toast = Toast.makeText(getApplicationContext(), "onResume marche pas", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-
-    }
 
 
     public void initButton() {
