@@ -1,39 +1,24 @@
 package com.pt.jpo;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
-
-
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import android.location.LocationListener;
 import android.widget.Toast;
-
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-//import com.google.android.maps.MapView;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -47,7 +32,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapActivity extends AppCompatActivity implements  View.OnClickListener,
         OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
-
 
     public final static String LAYOUT_MESSAGE = "com.pt.JPO.MESSAGE";
 
@@ -101,19 +85,18 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
     @Override
     public void onConnected(Bundle bundle) {
         Toast.makeText(this,"onConnected",Toast.LENGTH_SHORT).show();
-        Location mLastLocation = null;
         if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             Toast.makeText(this,"pas les permissions",Toast.LENGTH_SHORT).show();
         }
-        //LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, locationListener);
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, locationListener);
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if (mLastLocation != null) {
             mFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
             mFragment.getMapAsync(this);
 
-            //place marker at current position
+            //place un marqueur a la position
             //mGoogleMap.clear();
             latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions();
@@ -126,7 +109,6 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
         }
         else{
             Toast.makeText(this,"getLastLocation est Null !",Toast.LENGTH_SHORT).show();
-            //renvoi a la page de configuration pour activer la geolocalisation
         }
 
     }
