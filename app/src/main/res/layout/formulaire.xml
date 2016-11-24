@@ -3,6 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <LinearLayout
         android:id="@+id/layoutFormulaire"
         android:orientation="vertical"
@@ -18,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -27,9 +27,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Qui êtes-vous ? "
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_margin="10dp"/>
                 <RadioGroup
+                    android:id="@+id/Type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
@@ -38,13 +39,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Élève"
-                        android:textSize="16dp" />
+                        android:textSize="16sp" />
                     <RadioButton
                         android:id="@+id/Parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Parent"
-                        android:textSize="16dp" />
+                        android:textSize="16sp" />
+                    <RadioButton
+                        android:id="@+id/Etudiant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Étudiant"
+                        android:textSize="16sp" />
+
                 </RadioGroup>
             </LinearLayout>
 
@@ -57,7 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Nom : "
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:layout_margin="10dp"/>
                     <EditText
                         android:id="@+id/nom"
@@ -73,7 +81,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Prénom : "
-                        android:textSize="20dp"
+                        android:textSize="20sp"
+
                         android:layout_margin="10dp"/>
                     <EditText
                         android:id="@+id/prenom"
@@ -81,7 +90,23 @@
                         android:layout_height="match_parent"/>
                 </LinearLayout>
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Lycée : "
+                    android:textSize="20sp"
+                    android:layout_margin="10dp"/>
+                <EditText
+                    android:id="@+id/lycee"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -89,9 +114,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Quand comptez-vous venir ? "
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:layout_margin="10dp"/>
                     <RadioGroup
+                        android:id="@+id/Date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" >
@@ -100,20 +126,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Samedi"
-                            android:textSize="16dp" />
+                            android:textSize="16sp" />
                         <RadioButton
                             android:id="@+id/Dimanche"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Dimanche"
-                            android:textSize="16dp" />
+                            android:textSize="16sp" />
                         <RadioButton
                             android:id="@+id/Tous_les_jours"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="true"
                             android:text="Tous les jours"
-                            android:textSize="16dp" />
+                            android:textSize="16sp" />
                     </RadioGroup>
 
                     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -124,7 +150,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="Qu'attendez-vous de la JPO MMI ? "
-                            android:textSize="20dp"
+                            android:textSize="20sp"
                             android:layout_margin="10dp"/>
                         <EditText
                             android:id="@+id/attentes"
@@ -133,9 +159,11 @@
                     </LinearLayout>
 
                     <Button
+                        android:id="@+id/validButton"
                         android:layout_width="100dp"
                         android:layout_height="50dp"
-                        android:text="Valider"/>
+                        android:text="Valider"
+                        android:onClick="sendForm"/>
                 </LinearLayout>
         </LinearLayout>
     </ScrollView>
