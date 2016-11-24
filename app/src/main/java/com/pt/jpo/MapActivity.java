@@ -2,12 +2,16 @@ package com.pt.jpo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -35,13 +39,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
-import com.google.android.maps.MyLocationOverlay;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by sakalypse on 16/11/16.
@@ -59,7 +56,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
 
     LatLng latLng;
     GoogleMap mGoogleMap;
-    SupportMapFragment mFragment;
+    MapFragment mFragment;
     Marker currLocationMarker;
 
     @Override
@@ -69,23 +66,25 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
         initButton();
         initMarginAllLayout(findViewById(R.id.layoutLocalisation));
 
-        mFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mFragment.getMapAsync(this);
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(5000); //5 seconds
+        mLocationRequest.setFastestInterval(3000); //3 seconds
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+        buildGoogleApiClient();
     }
 
     @Override
     public void onMapReady(GoogleMap gMap) {
-        mGoogleMap = gMap;
-        try {
-            mGoogleMap.setMyLocationEnabled(true);
-        }catch(SecurityException s){
-
+        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            Toast.makeText(this,"pas les permissions",Toast.LENGTH_SHORT).show();
         }
 
-        buildGoogleApiClient();
-
-        mGoogleApiClient.connect();
-
+        mGoogleMap = gMap;
+        mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
+        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
+        mGoogleMap.setMyLocationEnabled(true);
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -103,13 +102,17 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
     public void onConnected(Bundle bundle) {
         Toast.makeText(this,"onConnected",Toast.LENGTH_SHORT).show();
         Location mLastLocation = null;
-        try {
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                    mGoogleApiClient);
-        }catch(SecurityException s){
-
+        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            Toast.makeText(this,"pas les permissions",Toast.LENGTH_SHORT).show();
         }
+        //LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, locationListener);
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
         if (mLastLocation != null) {
+            mFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+            mFragment.getMapAsync(this);
+
             //place marker at current position
             //mGoogleMap.clear();
             latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
@@ -118,20 +121,12 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
             markerOptions.title("Current Position");
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
             currLocationMarker = mGoogleMap.addMarker(markerOptions);
+            Toast.makeText(this,"getLastLocation est OK !",Toast.LENGTH_SHORT).show();
+
         }
         else{
             Toast.makeText(this,"getLastLocation est Null !",Toast.LENGTH_SHORT).show();
-        }
-
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(5000); //5 seconds
-        mLocationRequest.setFastestInterval(3000); //3 seconds
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        try {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-                    mLocationRequest, locationListener);
-        }catch(SecurityException s){
-
+            //renvoi a la page de configuration pour activer la geolocalisation
         }
 
     }
@@ -149,7 +144,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
     com.google.android.gms.location.LocationListener locationListener = new com.google.android.gms.location.LocationListener() {
         public void onLocationChanged(Location location) {
             //place marker at current position
-            //mGoogleMap.clear();
+            mGoogleMap.clear();
             if (currLocationMarker != null) {
                 currLocationMarker.remove();
             }
@@ -172,6 +167,28 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
 
         }
     };
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    /*@Override
+    protected void onResume() {
+        super.onResume();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+    }*/
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.disconnect();
+        }
+    }
 
 
     public void initButton() {
