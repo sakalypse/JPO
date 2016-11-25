@@ -35,7 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapActivity extends AppCompatActivity implements  View.OnClickListener,
         OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     public final static String LAYOUT_MESSAGE = "com.pt.JPO.MESSAGE";
 
@@ -50,13 +50,14 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.presentation_mmi);
-
-        getSupportActionBar().setTitle("Map Location Activity");
+        setContentView(R.layout.localisation);
+        initButton();
+        initMarginAllLayout(findViewById(R.id.layoutLocalisation));
 
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
     }
+
 
     @Override
     public void onPause() {
@@ -64,7 +65,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
 
         //stop location updates when Activity is no longer active
         if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (LocationListener) this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
     }
 
@@ -72,7 +73,6 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
     public void onMapReady(GoogleMap googleMap)
     {
         mGoogleMap=googleMap;
-        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -111,7 +111,8 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (LocationListener) this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         }
     }
 
@@ -143,13 +144,13 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
 
         //stop location updates
         if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (LocationListener) this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private void checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this,  android.Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
             // Should we show an explanation?
@@ -167,7 +168,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //Prompt the user once explanation has been shown
                                 ActivityCompat.requestPermissions(MapActivity.this,
-                                        new String[]{ android.Manifest.permission.ACCESS_FINE_LOCATION},
+                                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                                         MY_PERMISSIONS_REQUEST_LOCATION );
                             }
                         })
@@ -178,7 +179,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
-                        new String[]{ android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION );
             }
         }
@@ -193,8 +194,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted, yay! Do the
-                    // location-related task you need to do.
+                    // location-related task
                     if (ContextCompat.checkSelfPermission(this,
                             android.Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
@@ -206,19 +206,12 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
                     }
 
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                     Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
-
 
     public void initButton() {
         Button buttonFormulaire = (Button) findViewById(R.id.formulaire);
