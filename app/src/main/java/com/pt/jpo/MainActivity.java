@@ -1,6 +1,7 @@
 package com.pt.jpo;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,11 +11,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    DataBase bdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +120,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             }
+            case R.id.validButtonForm:{
+                bdd = new DataBase(this.getApplicationContext(), "jpo",
+                        null, 1, this );
+                bdd.sendForm();
+                break;
+            }
         }
+    }
+
+
+
+    public String getNom(){
+        return ((EditText)findViewById(R.id.nom)).getText().toString();
+    }
+    public String getPrenom(){
+        return ((EditText)findViewById(R.id.prenom)).getText().toString();
+    }
+    public String getLycee(){
+        return ((EditText)findViewById(R.id.lycee)).getText().toString();
+    }
+    public String getAttentes(){
+        return ((EditText)findViewById(R.id.attentes)).getText().toString();
+    }
+    public String getType(){
+        RadioGroup type = (RadioGroup) findViewById(R.id.Type);
+        int selectedId = type.getCheckedRadioButtonId();
+        RadioButton typeChoisi= (RadioButton) findViewById(selectedId);
+
+        return typeChoisi.getText().toString();
+    }
+    public String getDate(){
+        RadioGroup type = (RadioGroup) findViewById(R.id.Date);
+        int selectedId = type.getCheckedRadioButtonId();
+        RadioButton dateChoisi= (RadioButton) findViewById(selectedId);
+
+        return dateChoisi.getText().toString();
     }
 }

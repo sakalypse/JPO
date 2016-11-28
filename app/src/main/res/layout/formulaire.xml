@@ -159,11 +159,10 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/validButton"
+                        android:id="@+id/validButtonForm"
                         android:layout_width="100dp"
                         android:layout_height="50dp"
-                        android:text="Valider"
-                        android:onClick="sendForm"/>
+                        android:text="Valider"/>
                 </LinearLayout>
         </LinearLayout>
     </ScrollView>
