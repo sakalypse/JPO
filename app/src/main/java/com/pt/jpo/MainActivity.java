@@ -56,9 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
         }
 
-        SQLiteDatabase mydatabase = openOrCreateDatabase("jpo",MODE_PRIVATE,null);
-        bdd = new DataBase(this,"jpo",null, 1);
-        bdd.onCreate(mydatabase);
+        bdd = new DataBase(this,"jpo.db",null, 1);
 
         initButton();
     }

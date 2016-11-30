@@ -1,5 +1,6 @@
 package com.pt.jpo;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -32,8 +33,22 @@ public class DataBase extends SQLiteOpenHelper{
     }
 
     public void insert_visiteur(String type, String nom, String prenom, String lycee, String jour, String attente){
-        String requeteInsert = "INSERT INTO visiteurs VALUES ("+type+","+nom
+        /*String requeteInsert = "INSERT INTO visiteurs VALUES ("+type+","+nom
                 +","+prenom+","+lycee+","+jour+","+attente+");";
-        db.execSQL(requeteInsert);
+        db.execSQL(requeteInsert);*/
+
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("type", type);
+        values.put("nom", nom);
+        values.put("prenom", prenom);
+        values.put("lycee", lycee);
+        values.put("jour", jour);
+        values.put("attente", attente);
+
+        database.insert("visiteurs", null, values);
+        database.close();
     }
 }
