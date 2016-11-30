@@ -37,11 +37,14 @@ public class DataBase extends SQLiteOpenHelper{
                                                                     lycee + " TEXT, " +
                                                                     date + " TEXT, " +
                                                                     attente + " TEXT );";
+
     public String insertTable = "INSERT INTO JPO ("+type+","+nom+","+prenom
             +","+lycee+","+date+","+attente+") VALUES ("+typeValue+","+nomValue
             +","+prenomValue+","+lyceeValue+","+dateValue+","+attenteValue+");";
 
     public static final String JPO_TABLE_DROP = "DROP TABLE IF EXISTS JPO;";
+
+    public SQLiteDatabase db;
 
 
     public DataBase(Context context, String name, SQLiteDatabase.CursorFactory factory,
@@ -52,6 +55,7 @@ public class DataBase extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        this.db = db;
         db.execSQL(createTable);
     }
 
@@ -69,5 +73,7 @@ public class DataBase extends SQLiteOpenHelper{
         attenteValue = main.getAttentes();
         typeValue = main.getType();
         dateValue = main.getDate();
+        //execute le insert into
+        db.execSQL(insertTable);
     }
 }

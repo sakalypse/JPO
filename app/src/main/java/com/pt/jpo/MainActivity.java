@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -124,6 +125,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bdd = new DataBase(this.getApplicationContext(), "jpo",
                         null, 1, this );
                 bdd.sendForm();
+
+                Toast.makeText(getApplicationContext(), "Merci pour votre participation.",
+                        Toast.LENGTH_SHORT).show();
+                setContentView(R.layout.formulaire);
+                initButton();
+                initMarginAllLayout(findViewById(R.id.layoutFormulaire));
                 break;
             }
         }
