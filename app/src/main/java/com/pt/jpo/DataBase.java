@@ -20,8 +20,9 @@ public class DataBase extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE visiteurs( id INTEGER PRIMARY KEY AUTOINCREMENT," +
+        sqLiteDatabase.execSQL("CREATE TABLE if not exists visiteurs( id INTEGER PRIMARY KEY AUTOINCREMENT," +
                                 "type TEXT, nom TEXT, prenom TEXT, lycee TEXT, jour TEXT, attente TEXT);");
+        this.db = sqLiteDatabase;
     }
 
     @Override
@@ -34,6 +35,5 @@ public class DataBase extends SQLiteOpenHelper{
         String requeteInsert = "INSERT INTO visiteurs VALUES ("+type+","+nom
                 +","+prenom+","+lycee+","+jour+","+attente+");";
         db.execSQL(requeteInsert);
-
     }
 }

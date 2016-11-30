@@ -1,6 +1,7 @@
 package com.pt.jpo;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,8 +10,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    Button buttonFormulaire,buttonPresentationmmi,buttonValidForm,buttonProfSalle,buttonVideos,buttoGeolocalisation;
 
     DataBase bdd;
 
@@ -25,6 +29,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case "layoutFormulaire":
                     setContentView(R.layout.formulaire);
                     initMarginAllLayout(findViewById(R.id.layoutFormulaire));
+
+                    buttonValidForm = (Button) findViewById(R.id.validButtonForm);
+                    buttonValidForm.setOnClickListener(this);
                     break;
                 case "layoutPresentationMMI":
                     setContentView(R.layout.presentation_mmi);
@@ -49,22 +56,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
         }
 
-        bdd = new DataBase(this,"visiteurs.db",null, 1);
-
+        SQLiteDatabase mydatabase = openOrCreateDatabase("jpo",MODE_PRIVATE,null);
+        bdd = new DataBase(this,"jpo",null, 1);
+        bdd.onCreate(mydatabase);
 
         initButton();
     }
 
     public void initButton() {
-        Button buttonFormulaire = (Button) findViewById(R.id.formulaire);
+        buttonFormulaire = (Button) findViewById(R.id.formulaire);
         buttonFormulaire.setOnClickListener(this);
-        Button buttonPresentationmmi = (Button) findViewById(R.id.presentationmmi);
+        buttonPresentationmmi = (Button) findViewById(R.id.presentationmmi);
         buttonPresentationmmi.setOnClickListener(this);
-        Button buttonProfSalle = (Button) findViewById(R.id.profsalle);
+        buttonProfSalle = (Button) findViewById(R.id.profsalle);
         buttonProfSalle.setOnClickListener(this);
-        Button buttonVideos = (Button) findViewById(R.id.videos);
+        buttonVideos = (Button) findViewById(R.id.videos);
         buttonVideos.setOnClickListener(this);
-        Button buttoGeolocalisation = (Button) findViewById(R.id.localisation);
+        buttoGeolocalisation = (Button) findViewById(R.id.localisation);
         buttoGeolocalisation.setOnClickListener(this);
     }
 
@@ -86,53 +94,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case  R.id.formulaire: {
+            case R.id.formulaire: {
                 setContentView(R.layout.formulaire);
+                buttonValidForm = (Button) findViewById(R.id.validButtonForm);
+                buttonValidForm.setOnClickListener(this);
                 initButton();
                 initMarginAllLayout(findViewById(R.id.layoutFormulaire));
                 break;
             }
-            case  R.id.presentationmmi: {
+            case R.id.presentationmmi: {
                 setContentView(R.layout.presentation_mmi);
                 initButton();
                 initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
                 break;
             }
-            case  R.id.profsalle: {
+            case R.id.profsalle: {
                 setContentView(R.layout.profsalle);
                 initButton();
                 initMarginAllLayout(findViewById(R.id.layoutProfSalle));
                 break;
             }
-            case  R.id.videos: {
+            case R.id.videos: {
                 setContentView(R.layout.videos);
                 initButton();
                 initMarginAllLayout(findViewById(R.id.layoutVideos));
                 break;
             }
-            case  R.id.localisation: {
+            case R.id.localisation: {
                 Intent intent = new Intent(this, MapActivity.class);
                 startActivity(intent);
                 break;
             }
-            /**
+
             case R.id.validButtonForm:{
+                Toast.makeText(this,"avant validForm",Toast.LENGTH_SHORT).show();
 
-                bdd.insert_visiteur();
+                validForm();
 
-                Toast.makeText(getApplicationContext(), "Merci pour votre participation.",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Merci pour votre participation",Toast.LENGTH_SHORT).show();
                 setContentView(R.layout.formulaire);
                 initButton();
                 initMarginAllLayout(findViewById(R.id.layoutFormulaire));
-                break
+                break;
 
-            } **/
+            }
         }
     }
 
 
-    public void validForm(View view) {
+    public void validForm() {
         String nom = ((EditText)findViewById(R.id.nom)).getText().toString();
         String prenom = ((EditText)findViewById(R.id.prenom)).getText().toString();
         String lycee = ((EditText)findViewById(R.id.lycee)).getText().toString();
@@ -149,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String jour = dateChoisie.getText().toString();
 
         bdd.insert_visiteur(typeVis, nom, prenom, lycee, jour, attentes);
+
     }
 
 
