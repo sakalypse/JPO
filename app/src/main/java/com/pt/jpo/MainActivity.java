@@ -1,5 +1,6 @@
 package com.pt.jpo;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button buttonFormulaire,buttonPresentationmmi,buttonValidForm,buttonProfSalle,buttonVideos,buttoGeolocalisation;
 
-    DataBase bdd;
+    DataBase bddHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
         }
 
-        bdd = new DataBase(this,"jpo.db",null, 1);
+        bddHelper = new DataBase(this);
+        bddHelper.getWritableDatabase();
 
         initButton();
     }
@@ -125,8 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             case R.id.validButtonForm:{
-                Toast.makeText(this,"avant validForm",Toast.LENGTH_SHORT).show();
-
                 validForm();
 
                 Toast.makeText(this,"Merci pour votre participation",Toast.LENGTH_SHORT).show();
@@ -156,8 +156,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RadioButton dateChoisie= (RadioButton) findViewById(selectedIds);
         String jour = dateChoisie.getText().toString();
 
-        bdd.insert_visiteur(typeVis, nom, prenom, lycee, jour, attentes);
 
+        ContentValues values = new ContentValues();
+        values.put("type", typeVis);
+        values.put("nom", nom);
+        values.put("prenom", prenom);
+        values.put("lycee", lycee);
+        values.put("jour", jour);
+        values.put("attente", attentes);
+
+        bddHelper.insert_visiteur(typeVis, nom, prenom, lycee, jour, attentes);
     }
 
 
