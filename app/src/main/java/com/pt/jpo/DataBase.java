@@ -1,8 +1,12 @@
 package com.pt.jpo;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by Bladeknight on 24/11/2016.
@@ -10,19 +14,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataBase extends SQLiteOpenHelper{
 
-    public SQLiteDatabase db;
-
-    //name -> nom du fichier de bdd
-
-    public DataBase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public DataBase(Context context) {
+        super(context, "jpoBDD", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE if not exists visiteurs( id INTEGER PRIMARY KEY AUTOINCREMENT," +
                                 "type TEXT, nom TEXT, prenom TEXT, lycee TEXT, jour TEXT, attente TEXT);");
-        this.db = sqLiteDatabase;
     }
 
     @Override
@@ -32,8 +31,31 @@ public class DataBase extends SQLiteOpenHelper{
     }
 
     public void insert_visiteur(String type, String nom, String prenom, String lycee, String jour, String attente){
-        String requeteInsert = "INSERT INTO visiteurs VALUES ("+type+","+nom
+        /*String requeteInsert = "INSERT INTO visiteurs VALUES ("+type+","+nom
                 +","+prenom+","+lycee+","+jour+","+attente+");";
-        db.execSQL(requeteInsert);
+        db.execSQL(requeteInsert);*/
+
+        SQLiteDatabase bdd = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("type", type);
+        values.put("nom", nom);
+        values.put("prenom", prenom);
+        values.put("lycee", lycee);
+        values.put("jour", jour);
+        values.put("attente", attente);
+
+        bdd.insert("visiteurs", null, values);
+        bdd.close();
+    }
+
+    //return la liste de tous les visiteurs
+    public Cursor getAllVisiteurs(){
+        String query = "SELECT  * FROM visiteurs";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        return cursor;
     }
 }
