@@ -130,6 +130,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
     @Override
     public void onLocationChanged(Location location)
     {
+        float zoomLevel = (float) 16.0;
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
@@ -144,7 +145,8 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
 
         //move map camera
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        // mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
         //stop location updates
