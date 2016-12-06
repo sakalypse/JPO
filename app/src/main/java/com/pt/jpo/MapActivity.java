@@ -33,6 +33,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Created by sakalypse on 16/11/16.
  */
 
+/*
+    Ça marche !
+    améliorations : zoomer automatiquement
+ */
+
 public class MapActivity extends AppCompatActivity implements  View.OnClickListener,
         OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
