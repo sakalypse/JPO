@@ -2,9 +2,15 @@ package com.pt.jpo;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,9 +19,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.io.IOException;
 
-    Button buttonFormulaire,buttonPresentationmmi,buttonValidForm,buttonProfSalle,buttonVideos,buttoGeolocalisation;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    Button buttonAccueil,buttonFormulaire,buttonPresentationmmi,buttonValidForm,buttonProfSalle,buttonVideos,buttoGeolocalisation;
 
     DataBase bddHelper;
 
@@ -46,17 +54,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     setContentView(R.layout.videos);
                     initMarginAllLayout(findViewById(R.id.layoutVideos));
                     break;
+                case "layoutAccueil":
+                    setContentView(R.layout.accueil);
+                    initMarginAllLayout(findViewById(R.id.layoutAccueil));
+                    break;
                 default:
-                    setContentView(R.layout.presentation_mmi);
-                    initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
+                    setContentView(R.layout.accueil);
+                    initMarginAllLayout(findViewById(R.id.layoutAccueil));
                     break;
                 }
         }
         else{
-            setContentView(R.layout.presentation_mmi);
-            initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
+            setContentView(R.layout.accueil);
+            initMarginAllLayout(findViewById(R.id.layoutAccueil));
         }
 
+        //initialise la base de donnée-helper
         bddHelper = new DataBase(this);
         bddHelper.getWritableDatabase();
 
@@ -64,10 +77,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void initButton() {
+        buttonAccueil = (Button) findViewById(R.id.accueil);
+        buttonAccueil.setOnClickListener(this);
         buttonFormulaire = (Button) findViewById(R.id.formulaire);
         buttonFormulaire.setOnClickListener(this);
-        buttonPresentationmmi = (Button) findViewById(R.id.presentationmmi);
-        buttonPresentationmmi.setOnClickListener(this);
         buttonProfSalle = (Button) findViewById(R.id.profsalle);
         buttonProfSalle.setOnClickListener(this);
         buttonVideos = (Button) findViewById(R.id.videos);
@@ -102,10 +115,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 initMarginAllLayout(findViewById(R.id.layoutFormulaire));
                 break;
             }
-            case R.id.presentationmmi: {
-                setContentView(R.layout.presentation_mmi);
+            case R.id.accueil: {
+                setContentView(R.layout.accueil);
                 initButton();
-                initMarginAllLayout(findViewById(R.id.layoutPresentationMMI));
+                initMarginAllLayout(findViewById(R.id.layoutAccueil));
                 break;
             }
             case R.id.profsalle: {
@@ -141,19 +154,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void validForm() {
-        String nom = ((EditText)findViewById(R.id.nom)).getText().toString();
-        String prenom = ((EditText)findViewById(R.id.prenom)).getText().toString();
-        String lycee = ((EditText)findViewById(R.id.lycee)).getText().toString();
-        String attentes = ((EditText)findViewById(R.id.attentes)).getText().toString();
+        String nom = ((EditText) findViewById(R.id.nom)).getText().toString();
+        String prenom = ((EditText) findViewById(R.id.prenom)).getText().toString();
+        String lycee = ((EditText) findViewById(R.id.lycee)).getText().toString();
+        String attentes = ((EditText) findViewById(R.id.attentes)).getText().toString();
         // le type de visiteur :
         RadioGroup type = (RadioGroup) findViewById(R.id.Type);
         int selectedId = type.getCheckedRadioButtonId();
-        RadioButton typeChoisi= (RadioButton) findViewById(selectedId);
+        RadioButton typeChoisi = (RadioButton) findViewById(selectedId);
         String typeVis = typeChoisi.getText().toString();
         // jour venue
         RadioGroup types = (RadioGroup) findViewById(R.id.Date);
         int selectedIds = types.getCheckedRadioButtonId();
-        RadioButton dateChoisie= (RadioButton) findViewById(selectedIds);
+        RadioButton dateChoisie = (RadioButton) findViewById(selectedIds);
         String jour = dateChoisie.getText().toString();
 
 
@@ -166,37 +179,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         values.put("attente", attentes);
 
         bddHelper.insert_visiteur(typeVis, nom, prenom, lycee, jour, attentes);
+        /*
+        Cursor allVisiteurs = bddHelper.getAllVisiteurs();
+        allVisiteurs.moveToFirst();
+        Toast.makeText(this
+                ,allVisiteurs.getString(allVisiteurs.getColumnIndex("nom"))+""
+                        +allVisiteurs.getString(allVisiteurs.getColumnIndex("prenom")),
+                Toast.LENGTH_SHORT).show();*/
     }
-
-
-    /**
-    public String getNom(){
-        return ((EditText)findViewById(R.id.nom)).getText().toString();
-    }
-    public String getPrenom(){
-        return ((EditText)findViewById(R.id.prenom)).getText().toString();
-    }
-    public String getLycee(){
-        return ((EditText)findViewById(R.id.lycee)).getText().toString();
-    }
-    public String getAttentes(){
-        return ((EditText)findViewById(R.id.attentes)).getText().toString();
-    }
-    public String getType(){
-        RadioGroup type = (RadioGroup) findViewById(R.id.Type);
-        int selectedId = type.getCheckedRadioButtonId();
-        RadioButton typeChoisi= (RadioButton) findViewById(selectedId);
-
-        return typeChoisi.getText().toString();
-    }
-    public String getDate(){
-        RadioGroup type = (RadioGroup) findViewById(R.id.Date);
-        int selectedId = type.getCheckedRadioButtonId();
-        RadioButton dateChoisi= (RadioButton) findViewById(selectedId);
-
-        return dateChoisi.getText().toString();
-    }
-     **/
-
-
 }

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+//    /data/data/com.pt.jpo/databases/jpoBDD
+
 /**
  * Created by Bladeknight on 24/11/2016.
  */
@@ -46,6 +48,7 @@ public class DataBase extends SQLiteOpenHelper{
         values.put("attente", attente);
 
         bdd.insert("visiteurs", null, values);
+
         bdd.close();
     }
 

@@ -13,11 +13,11 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/presentationmmi"
+            android:id="@+id/accueil"
             android:layout_width="wrap_content"
             android:layout_weight="0.2"
             android:layout_height="match_parent"
-            android:text="Présentation MMI"
+            android:text="Accueil"
             android:background="@color/colorPrimary"
             android:textColor="@color/black"
             android:textStyle="bold"

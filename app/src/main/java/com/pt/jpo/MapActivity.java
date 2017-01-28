@@ -221,10 +221,10 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
     }
 
     public void initButton() {
+        Button buttonAccueil = (Button) findViewById(R.id.accueil);
+        buttonAccueil.setOnClickListener(this);
         Button buttonFormulaire = (Button) findViewById(R.id.formulaire);
         buttonFormulaire.setOnClickListener(this);
-        Button buttonPresentationmmi = (Button) findViewById(R.id.presentationmmi);
-        buttonPresentationmmi.setOnClickListener(this);
         Button buttonProfSalle = (Button) findViewById(R.id.profsalle);
         buttonProfSalle.setOnClickListener(this);
         Button buttonVideos = (Button) findViewById(R.id.videos);
@@ -257,12 +257,6 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
                 startActivity(intent);
                 break;
             }
-            case  R.id.presentationmmi: {
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra(LAYOUT_MESSAGE, "layoutPresentationMMI");
-                startActivity(intent);
-                break;
-            }
             case  R.id.profsalle: {
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra(LAYOUT_MESSAGE, "layoutProfSalle");
@@ -272,6 +266,12 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
             case  R.id.videos: {
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra(LAYOUT_MESSAGE, "layoutVideos");
+                startActivity(intent);
+                break;
+            }
+            case  R.id.accueil: {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra(LAYOUT_MESSAGE, "layoutAccueil");
                 startActivity(intent);
                 break;
             }
