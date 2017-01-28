@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="1">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -23,9 +23,23 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textAlignment="center"
-                    android:textSize="30dp"
+                    android:textSize="40dp"
+                    android:background="#66FFFFFF"
+                    android:textColor="@color/black"
                     android:text="Bienvenue aux JPO MMI"/>
-            </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textSize="40dp"
+                    android:background="#66FFFFFF"
+                    android:textColor="@color/black"
+                    android:layout_alignParentBottom="true"
+                    android:text="1J 16H 17M 34S"/>
+
+            </RelativeLayout>
 
 
     </LinearLayout>
