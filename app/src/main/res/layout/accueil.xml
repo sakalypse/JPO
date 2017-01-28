@@ -29,6 +29,7 @@
                     android:text="Bienvenue aux JPO MMI"/>
 
                 <TextView
+                    android:id="@+id/txtCountDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"

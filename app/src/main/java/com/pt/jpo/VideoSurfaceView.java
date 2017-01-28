@@ -9,15 +9,22 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
+
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class VideoSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
     private MediaPlayer mediaPlayer;
     private boolean has_started = false;
+
 
     public VideoSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -35,6 +42,7 @@ public class VideoSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     }
 
     private void init() {
+        //prepare la vidéo
         mediaPlayer = new MediaPlayer();
         getHolder().addCallback(this);
     }
