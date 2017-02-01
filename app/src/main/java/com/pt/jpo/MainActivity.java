@@ -169,29 +169,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void validForm() {
         String nom = ((EditText) findViewById(R.id.nom)).getText().toString();
         String prenom = ((EditText) findViewById(R.id.prenom)).getText().toString();
-        String lycee = ((EditText) findViewById(R.id.lycee)).getText().toString();
-        String attentes = ((EditText) findViewById(R.id.attentes)).getText().toString();
-        // le type de visiteur :
-        RadioGroup type = (RadioGroup) findViewById(R.id.Type);
-        int selectedId = type.getCheckedRadioButtonId();
+        String mail = ((EditText) findViewById(R.id.mail)).getText().toString();
+        String departement = ((EditText) findViewById(R.id.departement)).getText().toString();
+        String motivation = ((EditText) findViewById(R.id.motivation)).getText().toString();
+        // le bac du visiteur :
+        RadioGroup bac = (RadioGroup) findViewById(R.id.bac);
+        int selectedId = bac.getCheckedRadioButtonId();
         RadioButton typeChoisi = (RadioButton) findViewById(selectedId);
-        String typeVis = typeChoisi.getText().toString();
-        // jour venue
-        RadioGroup types = (RadioGroup) findViewById(R.id.Date);
-        int selectedIds = types.getCheckedRadioButtonId();
-        RadioButton dateChoisie = (RadioButton) findViewById(selectedIds);
-        String jour = dateChoisie.getText().toString();
+        String bacVis = typeChoisi.getText().toString();
 
 
         ContentValues values = new ContentValues();
-        values.put("type", typeVis);
         values.put("nom", nom);
         values.put("prenom", prenom);
-        values.put("lycee", lycee);
-        values.put("jour", jour);
-        values.put("attente", attentes);
+        values.put("mail", mail);
+        values.put("departement", departement);
+        values.put("bac", bacVis);
+        values.put("motivation", motivation);
 
-        bddHelper.insert_visiteur(typeVis, nom, prenom, lycee, jour, attentes);
+        bddHelper.insert_visiteur(nom, prenom, mail, departement, bacVis, motivation);
         /*
         Cursor allVisiteurs = bddHelper.getAllVisiteurs();
         allVisiteurs.moveToFirst();
@@ -207,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startDate = new Date();
         startDate.setTime(c.getTimeInMillis());
         c.set(Calendar.YEAR, 2017);
-        c.set(Calendar.MONTH, 2);
+        c.set(Calendar.MONTH, 1);
         c.set(Calendar.DAY_OF_MONTH, 4);
         c.set(Calendar.HOUR_OF_DAY, 9);
         c.set(Calendar.MINUTE, 0);
@@ -251,7 +247,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (txt != null) {
                     txt.setText(j + "J " + h + "H " + m + "M " + s + "S");
                 }
-                System.out.println(j+" "+h+" "+m+" "+s);
             }
         }.start();
     }

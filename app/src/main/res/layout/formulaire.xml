@@ -26,36 +26,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Qui êtes-vous ? "
+                    android:text="Prénom : "
                     android:textSize="20sp"
                     android:layout_margin="10dp"/>
-                <RadioGroup
-                    android:id="@+id/Type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-                    <RadioButton
-                        android:id="@+id/Eleve"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Élève"
-                        android:textSize="16sp"
-                        android:checked="true"
-                        />
-                    <RadioButton
-                        android:id="@+id/Parent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Parent"
-                        android:textSize="16sp" />
-                    <RadioButton
-                        android:id="@+id/Etudiant"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Étudiant"
-                        android:textSize="16sp" />
-
-                </RadioGroup>
+                <EditText
+                    android:id="@+id/prenom"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
                 <LinearLayout
@@ -82,14 +59,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Prénom : "
+                        android:text="Mail : "
                         android:textSize="20sp"
-
                         android:layout_margin="10dp"/>
                     <EditText
-                        android:id="@+id/prenom"
+                        android:id="@+id/mail"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -99,13 +75,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Lycée : "
+                    android:text="Département : "
                     android:textSize="20sp"
                     android:layout_margin="10dp"/>
                 <EditText
-                    android:id="@+id/lycee"
+                    android:id="@+id/departement"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -115,32 +91,39 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Quand comptez-vous venir ? "
+                        android:text="Bac : "
                         android:textSize="20sp"
                         android:layout_margin="10dp"/>
                     <RadioGroup
-                        android:id="@+id/Date"
+                        android:id="@+id/bac"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" >
                         <RadioButton
-                            android:id="@+id/Samedi"
+                            android:id="@+id/BacS"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Samedi"
+                            android:text="Bac S"
                             android:textSize="16sp" />
                         <RadioButton
-                            android:id="@+id/Dimanche"
+                            android:id="@+id/BacES"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Dimanche"
+                            android:text="Bac ES"
                             android:textSize="16sp" />
                         <RadioButton
-                            android:id="@+id/Tous_les_jours"
+                            android:id="@+id/BacL"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="true"
-                            android:text="Tous les jours"
+                            android:text="Bac L"
+                            android:textSize="16sp" />
+                        <RadioButton
+                            android:id="@+id/BacTechno"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Bac technologique"
                             android:textSize="16sp" />
                     </RadioGroup>
 
@@ -151,11 +134,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="Qu'attendez-vous de la JPO MMI ? "
+                            android:text="Pourquoi êtes-vous intéressés par le DUT MMI ?"
                             android:textSize="20sp"
                             android:layout_margin="10dp"/>
                         <EditText
-                            android:id="@+id/attentes"
+                            android:id="@+id/motivation"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
                     </LinearLayout>

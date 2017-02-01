@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 //    /data/data/com.pt.jpo/databases/jpoBDD
 
@@ -23,7 +24,7 @@ public class DataBase extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE if not exists visiteurs( id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                "type TEXT, nom TEXT, prenom TEXT, lycee TEXT, jour TEXT, attente TEXT);");
+                                "nom TEXT, prenom TEXT, mail TEXT, departement TEXT, bacVis TEXT, motivation TEXT);");
     }
 
     @Override
@@ -32,7 +33,7 @@ public class DataBase extends SQLiteOpenHelper{
         onCreate(sqLiteDatabase);
     }
 
-    public void insert_visiteur(String type, String nom, String prenom, String lycee, String jour, String attente){
+    public void insert_visiteur(String nom, String prenom, String mail, String departement, String bacVis, String motivation){
         /*String requeteInsert = "INSERT INTO visiteurs VALUES ("+type+","+nom
                 +","+prenom+","+lycee+","+jour+","+attente+");";
         db.execSQL(requeteInsert);*/
@@ -40,12 +41,12 @@ public class DataBase extends SQLiteOpenHelper{
         SQLiteDatabase bdd = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("type", type);
         values.put("nom", nom);
         values.put("prenom", prenom);
-        values.put("lycee", lycee);
-        values.put("jour", jour);
-        values.put("attente", attente);
+        values.put("mail", mail);
+        values.put("departement", departement);
+        values.put("bac", bacVis);
+        values.put("motivation", motivation);
 
         bdd.insert("visiteurs", null, values);
 
