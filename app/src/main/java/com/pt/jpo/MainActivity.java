@@ -153,14 +153,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             case R.id.validButtonForm:{
-                validForm();
+                String password = ((EditText) findViewById(R.id.nom)).getText().toString();
+                if (password.equals("jpommi2017")) {
+                    validForm();
 
-                Toast.makeText(this,"Merci pour votre participation",Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.formulaire);
-                initButton();
-                initMarginAllLayout(findViewById(R.id.layoutFormulaire));
-                break;
-
+                    Toast.makeText(this,"Merci pour votre participation",Toast.LENGTH_SHORT).show();
+                    setContentView(R.layout.formulaire);
+                    initButton();
+                    initMarginAllLayout(findViewById(R.id.layoutFormulaire));
+                    break;
+                }
+                else {
+                    Toast.makeText(this,"Mauvais mot de passe",Toast.LENGTH_SHORT).show();
+                    setContentView(R.layout.formulaire);
+                    initButton();
+                    initMarginAllLayout(findViewById(R.id.layoutFormulaire));
+                    break;
+                }
             }
         }
     }
@@ -177,7 +186,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int selectedId = bac.getCheckedRadioButtonId();
         RadioButton typeChoisi = (RadioButton) findViewById(selectedId);
         String bacVis = typeChoisi.getText().toString();
-
 
         ContentValues values = new ContentValues();
         values.put("nom", nom);
