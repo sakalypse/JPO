@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_weight="0.2"
             android:layout_height="match_parent"
-            android:text="Géolocalisation"
+            android:text="Infos pratiques"
             android:background="@color/colorPrimary"
             android:textColor="@color/black"
             android:textStyle="bold"

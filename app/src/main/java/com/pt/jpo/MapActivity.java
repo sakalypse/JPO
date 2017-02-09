@@ -28,19 +28,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.maps.GeoPoint;
 
 /**
  * Created by sakalypse on 16/11/16.
  */
 
-/*
-    Ça marche !
-    améliorations : zoomer automatiquement
- */
-
 public class MapActivity extends AppCompatActivity implements  View.OnClickListener,
         OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        GoogleApiClient.OnConnectionFailedListener {
 
     public final static String LAYOUT_MESSAGE = "com.pt.JPO.MESSAGE";
 
@@ -69,9 +65,9 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
         super.onPause();
 
         //stop location updates when Activity is no longer active
-        if (mGoogleApiClient != null) {
+        /*if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        }
+        }*/
     }
 
     @Override
@@ -94,7 +90,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
         }
         else {
             buildGoogleApiClient();
-            mGoogleMap.setMyLocationEnabled(true);
+            //mGoogleMap.setMyLocationEnabled(true);
         }
     }
 
@@ -109,6 +105,8 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
 
     @Override
     public void onConnected(Bundle bundle) {
+        //mettait en place la location et la locationRequest
+        /*
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
@@ -119,6 +117,14 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         }
+        */
+
+        double latitude = 47.49553479999999;
+        double longitude = 6.805264999999963;
+        LatLng latLng = new LatLng(latitude, longitude);
+
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19));
+        //mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(19));
     }
 
     @Override
@@ -127,6 +133,9 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {}
 
+
+    //Servait a mettre a jour la map lorsque la location changeait
+    /*
     @Override
     public void onLocationChanged(Location location)
     {
@@ -153,7 +162,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
-    }
+    }*/
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private void checkLocationPermission() {

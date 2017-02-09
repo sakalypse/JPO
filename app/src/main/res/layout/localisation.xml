@@ -15,7 +15,35 @@
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"/>
-
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/infoPratique"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="INFOS PRATIQUES"
+        android:textStyle="bold"
+        android:background="#FFFF"
+        android:textSize="15dp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/adresse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Adresse : 4 Place Tharradin, 25200 Montbéliard"
+        android:background="#FFFF"
+        android:textSize="15dp"
+        android:layout_below="@id/infoPratique"/>
+
+    <TextView
+        android:id="@+id/notel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Téléphone : 03 81 99 47 34"
+        android:background="#FFFF"
+        android:textSize="15dp"
+        android:layout_below="@id/adresse"/>
+
     <include layout="@layout/menu"/>
 </RelativeLayout>
