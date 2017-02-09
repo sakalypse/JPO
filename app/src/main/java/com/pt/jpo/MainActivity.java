@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 }
                 else {
-                    Toast.makeText(this,"Mauvais mot de passe",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"Mauvais mot de passe ",Toast.LENGTH_SHORT).show();
                     setContentView(R.layout.formulaire);
                     initButton();
                     initMarginAllLayout(findViewById(R.id.layoutFormulaire));
