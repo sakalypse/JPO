@@ -149,7 +149,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Mot de passe : "
+                        android:text="Mot de passe :  "
                         android:textSize="20sp"
                         android:layout_margin="10dp"/>
                     <EditText
