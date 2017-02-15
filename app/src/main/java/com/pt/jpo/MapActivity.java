@@ -36,7 +36,7 @@ import com.google.android.maps.GeoPoint;
 
 public class MapActivity extends AppCompatActivity implements  View.OnClickListener,
         OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMapClickListener  {
 
     public final static String LAYOUT_MESSAGE = "com.pt.JPO.MESSAGE";
 
@@ -285,5 +285,12 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
                 break;
             }
         }
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(LAYOUT_MESSAGE, "layoutProfSalle");
+        startActivity(intent);
     }
 }
