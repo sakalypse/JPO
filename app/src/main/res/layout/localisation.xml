@@ -15,6 +15,7 @@
             class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"/>
+
     </LinearLayout>
 
     <TextView

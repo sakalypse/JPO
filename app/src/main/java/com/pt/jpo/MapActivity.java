@@ -25,6 +25,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.IndoorBuilding;
+import com.google.android.gms.maps.model.IndoorLevel;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -33,10 +35,9 @@ import com.google.android.maps.GeoPoint;
 /**
  * Created by sakalypse on 16/11/16.
  */
-
 public class MapActivity extends AppCompatActivity implements  View.OnClickListener,
         OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMapClickListener  {
+        GoogleApiClient.OnConnectionFailedListener/*, GoogleMap.OnMapClickListener*/ {
 
     public final static String LAYOUT_MESSAGE = "com.pt.JPO.MESSAGE";
 
@@ -46,6 +47,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
+    IndoorBuilding batiment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -58,7 +60,6 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
     }
-
 
     @Override
     public void onPause() {
@@ -74,6 +75,31 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
     public void onMapReady(GoogleMap googleMap)
     {
         mGoogleMap=googleMap;
+        mGoogleMap.clear();
+        mGoogleMap.setBuildingsEnabled(true);
+        mGoogleMap.setIndoorEnabled(true);
+        System.out.println("\n\n\n\n ---------- "+mGoogleMap.isBuildingsEnabled());
+        System.out.println("\n\n\n\n ---------- "+mGoogleMap.isIndoorEnabled());
+
+
+        mGoogleMap.setOnMapClickListener( new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng arg0) {
+                batiment = mGoogleMap.getFocusedBuilding();
+
+                IndoorLevel indoorLevel = batiment.getLevels().get(batiment.getActiveLevelIndex());
+                String level = indoorLevel.getShortName(); //level = "1" pour le premier étage
+
+
+                //met a false pour pouvoir mettre true la prochaine map
+                mGoogleMap.setIndoorEnabled(false);
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra(LAYOUT_MESSAGE, "layoutProfSalle");
+                startActivity(intent);
+
+            }
+        });
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -82,7 +108,7 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
                     == PackageManager.PERMISSION_GRANTED) {
                 //Location Permission is already granted
                 buildGoogleApiClient();
-                mGoogleMap.setMyLocationEnabled(true);
+                //mGoogleMap.setMyLocationEnabled(true);
             } else {
                 //Request Location Permission
                 checkLocationPermission();
@@ -259,6 +285,8 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
     }
 
     public void onClick(View v) {
+        mGoogleMap.setIndoorEnabled(false);
+
         switch (v.getId()) {
             case  R.id.formulaire: {
                 Intent intent = new Intent(this, MainActivity.class);
@@ -287,10 +315,18 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
         }
     }
 
+/*
     @Override
     public void onMapClick(LatLng latLng) {
+        batiment = mGoogleMap.getFocusedBuilding();
+
+        IndoorLevel indoorLevel = batiment.getLevels().get(batiment.getActiveLevelIndex());
+        String level = indoorLevel.getShortName(); //level = "1" pour le premier étage
+
+        System.out.println("\n\n\n\n\n---------onMapClick----------\n\n\n\n\n\n");
+
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(LAYOUT_MESSAGE, "layoutProfSalle");
         startActivity(intent);
-    }
+    }*/
 }
