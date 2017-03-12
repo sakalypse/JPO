@@ -59,6 +59,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case "layoutProfSalle":
                     setContentView(R.layout.profsalle);
                     initMarginAllLayout(findViewById(R.id.layoutProfSalle));
+
+                    double longitude = extras.getDouble("longitude");
+                    double latitude = extras.getDouble("latitude");
+                    int level = extras.getInt("level");
+
+                    //recherche la salle a focus
+                    if(level == 0 && longitude>=6.805383525788784 && latitude>=47.49520720909908
+                            && longitude<=6.805445216596127 && latitude<=47.495305069944095){
+                        findViewById(R.id.profSalleScroll).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                findViewById(R.id.profSalleScroll).scrollTo(0, findViewById(R.id.prof7).getBottom());}
+                        }
+                        );
+                    }
+
+
+                    System.out.println("----------longitude : "+longitude);
+                    System.out.println("----------latitude : "+latitude);
+                    System.out.println("----------level : "+level);
+
+
                     break;
                 case "layoutVideos":
                     setContentView(R.layout.videos);

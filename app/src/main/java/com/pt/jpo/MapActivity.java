@@ -78,9 +78,6 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
         mGoogleMap.clear();
         mGoogleMap.setBuildingsEnabled(true);
         mGoogleMap.setIndoorEnabled(true);
-        System.out.println("\n\n\n\n ---------- "+mGoogleMap.isBuildingsEnabled());
-        System.out.println("\n\n\n\n ---------- "+mGoogleMap.isIndoorEnabled());
-
 
         mGoogleMap.setOnMapClickListener( new GoogleMap.OnMapClickListener() {
             @Override
@@ -96,6 +93,11 @@ public class MapActivity extends AppCompatActivity implements  View.OnClickListe
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra(LAYOUT_MESSAGE, "layoutProfSalle");
+                //met en place la longitude, latitude et etage
+                intent.putExtra("longitude", arg0.longitude);
+                intent.putExtra("latitude", arg0.latitude);
+                intent.putExtra("etage", level);
+
                 startActivity(intent);
 
             }
